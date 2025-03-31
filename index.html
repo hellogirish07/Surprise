@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎁 Secret Surprise Loading...</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<style>
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+            opacity: 0.8;
+        }
+
+        50% {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+
+        100% {
+            transform: scale(1);
+            opacity: 0.8;
+        }
+    }
+
+    .pulse {
+        animation: pulse 1.5s infinite;
+    }
+</style>
+</head>
+
+<body
+    class="flex flex-col justify-center items-center h-screen bg-gradient-to-r from-purple-600 to-blue-500 text-white text-center">
+    <h1 class="text-4xl font-bold pulse m-2">Girish has sent you something</h1>
+    <h1 class="text-4xl font-bold pulse m-2">🎁 Secret Surprise is Loading... 🎁</h1>
+    <div class="w-64 h-3 bg-gray-300 mt-6 rounded-full overflow-hidden">
+        <div id="progress" class="h-full bg-yellow-400 transition-all"></div>
+    </div>
+    <p id="loadingText" class="mt-2 text-lg">0% complete</p>
+    <p id="message" class="mt-4 text-xl italic">✨ Preparing something special for you... ✨</p>
+
+    <script>
+        let percent = 0;
+        let progressBar = document.getElementById("progress");
+        let loadingText = document.getElementById("loadingText");
+        let messageText = document.getElementById("message");
+        let messages = [
+            "🔒 Unlocking your surprise...",
+            "🎨 Adding special colors...",
+            "💎 Enhancing the experience...",
+            "🎶 Loading secret sounds...",
+            "🚀 Almost ready... Get excited!",
+            "🎉 Just a few more seconds...",
+        ];
+        let messageIndex = 0;
+
+        let interval = setInterval(() => {
+            percent += Math.floor(Math.random() * 15);
+            if (percent >= 100) {
+                clearInterval(interval);
+                document.body.innerHTML = `
+                    <div class='flex flex-col justify-center items-center h-screen bg-red-500 text-white text-center px-9'>
+                        <img src="2.png" alt="Gift" class="w-1/2 mb-4 rounded-lg ">
+                        <h1 class='text-6xl font-bold'>You Got Pranked!</h1>
+                        <p class='text-xl mt-4'>Haha! You thought it was a real surprise? Nope! Just a prank!</p>
+                    </div>`;
+            } else {
+                progressBar.style.width = percent + "%";
+                loadingText.innerText = percent + "% complete";
+
+                if (messageIndex < messages.length) {
+                    messageText.innerText = messages[messageIndex];
+                    messageIndex++;
+                }
+            }
+        }, 1000);
+    </script>
+</body>
+
+</html>
