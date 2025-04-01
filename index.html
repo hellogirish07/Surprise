@@ -7,6 +7,7 @@
     <title>🎁 Secret Surprise Loading...</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
+
 <style>
     @keyframes pulse {
         0% {
@@ -29,15 +30,15 @@
         animation: pulse 1.5s infinite;
     }
 </style>
-</head>
 
-<body
-    class="flex flex-col justify-center items-center h-screen bg-gradient-to-r from-purple-600 to-blue-500 text-white text-center">
+<body class="flex flex-col justify-center items-center h-screen bg-gradient-to-r from-purple-600 to-blue-500 text-white text-center">
     <h1 class="text-4xl font-bold pulse m-2">Girish has sent you something</h1>
     <h1 class="text-4xl font-bold pulse m-2">🎁 Secret Surprise is Loading... 🎁</h1>
+    
     <div class="w-64 h-3 bg-gray-300 mt-6 rounded-full overflow-hidden">
         <div id="progress" class="h-full bg-yellow-400 transition-all"></div>
     </div>
+    
     <p id="loadingText" class="mt-2 text-lg">0% complete</p>
     <p id="message" class="mt-4 text-xl italic">✨ Preparing something special for you... ✨</p>
 
@@ -60,12 +61,26 @@
             percent += Math.floor(Math.random() * 15);
             if (percent >= 100) {
                 clearInterval(interval);
-                document.body.innerHTML = `
-                    <div class='flex flex-col justify-center items-center h-screen bg-red-500 text-white text-center px-9'>
-                        <img src="2.png" alt="Gift" class="w-1/2 mb-4 rounded-lg ">
-                        <h1 class='text-6xl font-bold'>You Got Pranked!</h1>
-                        <p class='text-xl mt-4'>Haha! You thought it was a real surprise? Nope! Just a prank!</p>
-                    </div>`;
+                
+                // Creating new page content dynamically
+                let newDiv = document.createElement("div");
+                newDiv.className = "flex flex-col justify-center items-center h-screen text-white text-center px-9";
+
+                newDiv.innerHTML = `
+                    <h1 class='text-6xl font-bold'>Your surprise is ready</h1>
+                    <p class='text-xl mt-4'>Click on the button to open it </p>
+                    <button id="openSurprise" class='mt-6 bg-yellow-400 text-gray-800 px-4 py-2 rounded-full hover:bg-yellow-500 transition duration-300'>Open Surprise</button>
+                    <p class='mt-4 text-lg'>Thank you for your patience!</p>
+                `;
+
+                document.body.innerHTML = "";
+                document.body.appendChild(newDiv);
+
+                // Add click event for the button to redirect
+                document.getElementById("openSurprise").addEventListener("click", function () {
+                    window.location.href = "https://girish18-mistry-box.netlify.app/";
+                });
+
             } else {
                 progressBar.style.width = percent + "%";
                 loadingText.innerText = percent + "% complete";
